@@ -1,0 +1,4 @@
+select content_series.description as "SERIES DESCRIPTION", content_series.name as "SERIES NAME", teacher_id as "TEACHER ID", first_name, last_name 
+from content_series join user_meta
+on user_meta.user_id = content_series.teacher_id
+where content_series.section = 'mindfulness'

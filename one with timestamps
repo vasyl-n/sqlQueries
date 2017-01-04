@@ -1,0 +1,41 @@
+select count(distinct "userId") from team_membership tm
+full join session_step_completed_event ss on tm."userId" = ss.user_id
+join team t on t.id = tm."teamId"
+join public.user pu on pu.id = tm."userId"
+where t.name like 'Havas' 
+and (ss.timestamp BETWEEN '2015-10-16 00:00:00'::timestamp
+                AND '2015-11-15 00:00:00'::timestamp)
+or (pu.created BETWEEN '2015-10-16 00:00:00'::timestamp
+                 AND '2015-11-15 00:00:00'::timestamp
+                 and ss.user_id is null)
+                 
+                 
+--select * from public.user pu join team_membership tm on tm."userId" = pu.id
+--where tm."teamId" = 16
+
+select distinct ss.user_id from team_membership tm
+join session_step_completed_event ss on tm."userId" = ss.user_id
+where tm."teamId" = 16
+and ss.timestamp BETWEEN '2015-10-16 00:00:00'::timestamp
+                AND '2015-11-15 00:00:00'::timestamp
+
+select id from public.user pu
+join team_membership tm on pu.id = tm."userId"
+where tm."teamId" = 16
+and pu.created BETWEEN '2015-10-16 00:00:00'::timestamp
+                 AND '2015-11-15 00:00:00'::timestamp
+   
+                 
+(select distinct ss.user_id as id, pu.email from team_membership tm
+join session_step_completed_event ss on tm."userId" = ss.user_id
+join public.user pu on pu.id = tm."userId"
+where tm."teamId" = 16
+and ss.timestamp BETWEEN '2015-10-16 00:00:00'::timestamp
+                AND '2015-11-15 00:00:00'::timestamp)
+
+union all 
+(select id, email from public.user pu
+join team_membership tm on pu.id = tm."userId"
+where tm."teamId" = 16
+and pu.created BETWEEN '2015-10-16 00:00:00'::timestamp
+                 AND '2015-11-15 00:00:00'::timestamp)

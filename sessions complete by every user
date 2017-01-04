@@ -1,0 +1,6 @@
+select um.first_name, um.last_name, count(session_id), t.name as team_name from session_completed_event sce
+join team_membership tm on tm."userId" = sce.user_id
+join team t on t.id = tm."teamId"
+join user_meta um on sce.user_id = um.user_id
+where t.name like 'Havas'
+group by sce.user_id, t.name, um.first_name, um.last_name

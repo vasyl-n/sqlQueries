@@ -1,0 +1,7 @@
+select content_series.description as "SERIES DESCRIPTION", content_series.category "CATEGORY", content_session.name as "SESSION", content_session.description as "SESSION DESCRIPTION", content_asset.value as URL
+from content_session 
+join content_series 
+on content_session.series_id = content_series.id join content_session_step
+on content_session_step.session_id = content_session.id join content_asset
+on content_asset.session_step_id = content_session_step.id
+where content_series.section = 'grow'
