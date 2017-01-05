@@ -1,0 +1,2 @@
+select first_name, last_name, experience_level from user_meta 
+where user_id in (select id from public.user where email like '%gmail.com')

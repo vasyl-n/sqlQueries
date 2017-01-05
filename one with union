@@ -1,0 +1,9 @@
+select first_name, last_name, email, name from public.user u join user_meta um on u.id = um.user_id
+join user_subscription us on us.user_id = um.user_id join user_pricing_plan upp 
+on upp.id = us.plan_id
+ where u.id not in (select tm."userId" from team_membership tm) and u.id in (select user_id from user_subscription)
+union
+select first_name, last_name, email, name from public.user u join user_meta um on u.id = um.user_id
+join team_membership tm on u.id = tm."userId" 
+join team t on t.id = tm."teamId"
+where u.id in (select tm."userId" from team_membership tm)
